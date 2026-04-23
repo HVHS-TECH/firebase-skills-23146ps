@@ -7,15 +7,15 @@
 // Input:  n/a
 // Return: n/a
 /**************************************************************/
-  const firebaseConfig = {
-    apiKey: ,
-    authDomain: ,
-    databaseURL: ,
-    projectId: ,
-    storageBucket: ,
-    messagingSenderId:,
-    appId:
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyAMHNLA93MQ3z7LIENSBQ33XImNSRXxK1g",
+  authDomain: "pasha-stepura-12comp.firebaseapp.com",
+  databaseURL: "https://pasha-stepura-12comp-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "pasha-stepura-12comp",
+  storageBucket: "pasha-stepura-12comp.firebasestorage.app",
+  messagingSenderId: "1030985723397",
+  appId: "1:1030985723397:web:d733afa5d1a6f5cbf9f66c"
+};
 
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
