@@ -18,10 +18,31 @@ const HTML_OUTPUT = document.getElementById("databaseOutput");
 // This means it replaces the whole database with message:Hello World
 /**************************************************************/
 function helloWorld(){
-  console.log("Running helloWorld()")
+  console.log("Running helloWorld()");
   firebase.database().ref('/').set(
     {
-      message: 'the button works'
+      message: 'new message'
     }
-  )
+  );
+}
+
+function readData(){
+  console.log("reading data");
+  firebase.database().ref('/message').once('value', displayRead, fb_readError);
+  console.log('readData() complete');
+}
+
+function displayRead(snapshot){
+  var dbData = snapshot.val();
+  if (dbData == null) {
+    console.log("there was no data when attempting read")
+  } else {  
+    console.log("displaying read: " + snapshot.val());
+  }
+  HTML_OUTPUT.innerHTML = snapshot.val();
+}
+
+function fb_readError(error){
+  console.log("there was an error reading the message");
+  console.log(error);
 }
