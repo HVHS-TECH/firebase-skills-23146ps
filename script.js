@@ -17,19 +17,39 @@ const HTML_OUTPUT = document.getElementById("databaseOutput");
 // The ref('/') part tells the operation to write to the base level of the database "/"
 // This means it replaces the whole database with message:Hello World
 /**************************************************************/
+let user = 'message'
+let messagechange = 'message2'
+
 function helloWorld(){
   console.log("Running helloWorld()");
   firebase.database().ref('/').set(
     {
-      message: 'new message'
+      game1: {
+        users: {
+          message: 'message1'
+        }
+      }
     }
+  );
+}
+
+function message2() {
+  console.log("Running message2");
+  firebase.database().ref('/game1/users/' + user).set(
+    messagechange
   );
 }
 
 function readData(){
   console.log("reading data");
-  firebase.database().ref('/message').once('value', displayRead, fb_readError);
+  firebase.database().ref('/game1/users/message').once('value', displayRead, fb_readError);
   console.log('readData() complete');
+}
+
+function dataListener() {
+  console.log("update detected")
+  firebase.database().ref('/').on('value', displayRead, fb_readError);
+  console.log("dataListener() completed")
 }
 
 function displayRead(snapshot){
@@ -39,7 +59,7 @@ function displayRead(snapshot){
   } else {  
     console.log("displaying read: " + snapshot.val());
   }
-  HTML_OUTPUT.innerHTML = snapshot.val();
+  //HTML_OUTPUT.innerHTML = snapshot.val();
 }
 
 function fb_readError(error){
