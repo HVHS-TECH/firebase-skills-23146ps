@@ -35,7 +35,12 @@
   <p> Task 1: change the message in fb_helloWorld() to "Kia ora te ao"</p>
   <p> Task 2: create another button that changes the message to "Goodbye/ka kite āno"</p>
   <button onclick="helloWorld()">message1</button>
-  <button onclick="message2()">message2</button>
+
+  <form onsubmit="return false;">
+    <label for="formName">Add to database:</label>
+    <input type="text" id="textInput" name="formName">
+    <input type="submit" onClick=getFormInput()>
+  </form>
 
   <h2>Output</h2>
   <div id="databaseOutput">

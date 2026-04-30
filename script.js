@@ -17,30 +17,25 @@ const HTML_OUTPUT = document.getElementById("databaseOutput");
 // The ref('/') part tells the operation to write to the base level of the database "/"
 // This means it replaces the whole database with message:Hello World
 /**************************************************************/
-let user = 'message'
-let messagechange = 'message2'
+let userInput
 
-function helloWorld(){
+function getFormInput() {
+  const NAME_FIELD = document.getElementById("formName");
+  userInput = NAME_FIELD;
+  sendUserData();
+}
+
+function helloWorld() {
   console.log("Running helloWorld()");
-  firebase.database().ref('/').set(
-    {
-      game1: {
-        users: {
-          message: 'message1'
-        }
-      }
-    }
-  );
+  firebase.database().ref('/game1/users/message/').set('helloWorld()');
 }
 
-function message2() {
+function sendUserData() {
   console.log("Running message2");
-  firebase.database().ref('/game1/users/' + user).set(
-    messagechange
-  );
+  firebase.database().ref('/game1/users/usermessage/').set(+userInput);
 }
 
-function readData(){
+function readData() {
   console.log("reading data");
   firebase.database().ref('/game1/users/message').once('value', displayRead, fb_readError);
   console.log('readData() complete');
@@ -52,17 +47,17 @@ function dataListener() {
   console.log("dataListener() completed")
 }
 
-function displayRead(snapshot){
+function displayRead(snapshot) {
   var dbData = snapshot.val();
   if (dbData == null) {
     console.log("there was no data when attempting read")
-  } else {  
+  } else {
     console.log("displaying read: " + snapshot.val());
   }
   //HTML_OUTPUT.innerHTML = snapshot.val();
 }
 
-function fb_readError(error){
+function fb_readError(error) {
   console.log("there was an error reading the message");
   console.log(error);
 }
