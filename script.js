@@ -37,7 +37,7 @@ function sendUserData() {
 
 function readData() {
   console.log("reading data");
-  firebase.database().ref('/game1/users/message').once('value', displayRead, fb_readError);
+  firebase.database().ref('/game1/users').once('value', fb_readUserData, fb_readError);
   console.log('readData() complete');
 }
 
@@ -50,11 +50,22 @@ function dataListener() {
 function displayRead(snapshot) {
   var dbData = snapshot.val();
   if (dbData == null) {
-    console.log("there was no data when attempting read")
+    console.log("there was no data when attempting read");
   } else {
-    console.log("displaying read: " + snapshot.val());
+    console.log(dbData);
   }
   //HTML_OUTPUT.innerHTML = snapshot.val();
+}
+
+function fb_readUserData(snapshot){
+  console.log("fb_readUserData")
+  let userData = snapshot.val();
+  let messages = Object.keys(userData)
+  for(i=0; i < messages.length; i++) {
+    let key =  messages[i];
+    console.log(i+ " is for " +key+ "." +userData[key])
+  }
+  console.log("fb_readUserData complete")
 }
 
 function fb_readError(error) {
