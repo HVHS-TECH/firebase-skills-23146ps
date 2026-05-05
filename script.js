@@ -20,8 +20,7 @@ const HTML_OUTPUT = document.getElementById("databaseOutput");
 let userInput
 
 function getFormInput() {
-  const NAME_FIELD = document.getElementById("formName");
-  userInput = NAME_FIELD;
+  userInput = document.getElementById("formName");
   sendUserData();
 }
 
@@ -32,7 +31,7 @@ function helloWorld() {
 
 function sendUserData() {
   console.log("Running message2");
-  firebase.database().ref('/game1/users/usermessage/').set(+userInput);
+  firebase.database().ref('/game1/users/usermessage/').set(' '+userInput);
 }
 
 function readData() {
