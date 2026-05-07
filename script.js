@@ -9,6 +9,34 @@
 const HTML_OUTPUT = document.getElementById("databaseOutput");
 
 /**************************************************************/
+// LOGIN
+/**************************************************************/
+var GLOBAL_user;
+
+function fb_login(){
+    firebase.auth().onAuthStateChanged(LOGIN_CALLBACK);
+}
+
+function fb_handleLogin(_user) {
+    if (_user) {
+        console.log("User has logged in")
+        GLOBAL_user = _user;
+        console.log(GLOBAL_user)
+    } else {
+        console.log("User is NOT logged in - Starting popup process")
+        fb_popupLogin();
+    }
+}
+
+function fb_popupLogin() {
+    var provider = new firebase.auth.GoogleAuthProvider();
+
+    firebase.auth().signInWithPopup(provider).then((result) => {
+        GLOBAL_user = result.user;
+        console.log("User has logged in")
+    });
+}
+/**************************************************************/
 // helloWorld()
 // Demonstrate a minimal write to firebase
 // This function replaces the entire database with the message "Hello World"
@@ -26,17 +54,17 @@ function getFormInput() {
 
 function helloWorld() {
   console.log("Running helloWorld()");
-  firebase.database().ref('/game1/users/message/').set('helloWorld()');
+  firebase.database().ref('/game1/userdata/message/').set('helloWorld()');
 }
 
 function sendUserData() {
   console.log("Running message2");
-  firebase.database().ref('/game1/users/usermessage/').set(' '+userInput);
+  firebase.database().ref('/game1/userdata/usermessage/').set(' '+userInput);
 }
 
 function readData() {
   console.log("reading data");
-  firebase.database().ref('/game1/users').once('value', fb_readUserData, fb_readError);
+  firebase.database().ref('/game1/userdata/scores').orderByValue().once('value', fb_readUserScores, fb_readError);
   console.log('readData() complete');
 }
 
@@ -56,15 +84,23 @@ function displayRead(snapshot) {
   //HTML_OUTPUT.innerHTML = snapshot.val();
 }
 
-function fb_readUserData(snapshot){
-  console.log("fb_readUserData")
+function fb_readUserScores(snapshot){
+  console.log("fb_readUserScores");
+  snapshot.forEach(fb_showOneScore)
+  /*
   let userData = snapshot.val();
   let messages = Object.keys(userData)
   for(i=0; i < messages.length; i++) {
     let key =  messages[i];
     console.log(i+ " is for " +key+ "." +userData[key])
+  
   }
+  */
   console.log("fb_readUserData complete")
+}
+
+function fb_showOneScore(child){
+  console.log(child.key+" got "+child.val()+" points");
 }
 
 function fb_readError(error) {
