@@ -9,7 +9,7 @@
 var GLOBAL_user;
 
 function fb_login(){
-    firebase.auth().onAuthStateChanged(LOGIN_CALLBACK);
+    firebase.auth().onAuthStateChanged(fb_handleLogin);
 }
 
 function fb_handleLogin(_user) {
