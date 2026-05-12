@@ -18,21 +18,17 @@ fb_login();
 // The ref('/') part tells the operation to write to the base level of the database "/"
 // This means it replaces the whole database with message:Hello World
 /**************************************************************/
-let userInput
-
 function getFormInput() {
-  userInput = document.getElementById("formName");
-  sendUserData();
+  const TEXT_INPUT = document.getElementById("textInput");
+  let userInput = TEXT_INPUT.value;
+  console.log("Running message2");
+  firebase.database().ref('/game1/userdata/usermessage/').set(userInput);
+  console.log("message2 done");
 }
 
 function helloWorld() {
   console.log("Running helloWorld()");
   firebase.database().ref('/game1/userdata/message/').set('helloWorld()');
-}
-
-function sendUserData() {
-  console.log("Running message2");
-  firebase.database().ref('/game1/userdata/usermessage/').set(' '+userInput);
 }
 
 function readData() {
@@ -74,6 +70,7 @@ function fb_readUserScores(snapshot){
 
 function fb_showOneScore(child){
   console.log(child.key+" got "+child.val()+" points");
+  HTML_OUTPUT.innerHTML += "<p>" + child.key + " got " +child.val() + " points </p>"
 }
 
 function fb_readError(error) {
